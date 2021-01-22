@@ -25,7 +25,6 @@ module.exports = {
           options: {
             presets: ['es2015', 'react'],
             plugins: [
-              ["import", { libraryName: "antd", style: "css", }],
               "transform-class-properties",
               "transform-object-rest-spread",
               "syntax-dynamic-import"
@@ -61,7 +60,7 @@ module.exports = {
           chunks: 'all',
         },
         utilityVendor: {
-          test: /[\\/]node_modules[\\/](lodash|moment)[\\/]/,
+          test: /[\\/]node_modules[\\/]/,
           chunks: 'all',
         },
       },

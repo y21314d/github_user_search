@@ -44,7 +44,7 @@ module.exports = {
 	devtool: 'cheap-module-eval-source-map',
 	plugins: [
 		new webpack.DefinePlugin({
-			ENV: JSON.stringify("dev")
+			ENV: JSON.stringify("production")
 		}),
 		new HtmlWebpackPlugin({
 			filename: 'index.html',
