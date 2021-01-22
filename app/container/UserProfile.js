@@ -45,7 +45,7 @@ class UserProfile extends Component {
         if (this.props.isPending) {
             return (
               <div >
-                <Loading />
+                <Loading width={100} height={100} position={"absolute"} />
               </div>
             );
           }

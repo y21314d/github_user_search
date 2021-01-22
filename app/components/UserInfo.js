@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { layout } from 'styled-system'
 import Loading from '../components/Loading'
@@ -16,6 +16,16 @@ const Avatar = styled.img`
   border-radius: 8px;
   max-height: 250px;
 `
+
+const ImgBox = styled.div`
+    margin-bottom: 0px;
+    margin-right: 20px;
+    min-height: 50px;
+    border-radius: 8px;
+    max-height: 250px;
+    ${layout}
+`
+
 const Info = styled.div`
   flex:1 1 0%;
   ${layout}
@@ -65,10 +75,25 @@ const InfoType = styled(InfoNumber)`
 export default function UserInfo(props) {
   const { avatar_url, name, html_url, login, company, blog, location, email, hireable,
     bio, public_repos, public_gists, followers, following } = props.userInfo
+
+  const [fetching, setFetching] = useState(true)
+
+  const onImageLoad = () => {
+    setFetching(false)
+  }
+
   return (
     <div>
       <UserInfoBlock display={["block", "flex", "flex", "flex"]}>
-        <Avatar src={avatar_url} />
+        {/* <Avatar src={avatar_url} /> */}
+        <ImgBox >
+          <img src={avatar_url} width={["150px", "80px", "100px", "150px"]} onLoad={() => onImageLoad()} />
+          {
+            fetching === false
+              ? null
+              : <Loading position={"relative"}></Loading>
+          }
+        </ImgBox>
         <Info >
           <div>
             <UserName>{name}</UserName>

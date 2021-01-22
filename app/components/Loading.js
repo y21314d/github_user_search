@@ -14,7 +14,7 @@ const rotate = keyframes`
 const LoadingBox = styled.div`
     width: 100px;
     height: 100px;
-    position: absolute;
+    position: ${props => props.position};
     top: calc(50% - 50px);
     left: calc(50% - 50px);
     box-sizing: border-box;
@@ -28,10 +28,10 @@ const LoadingBox = styled.div`
 
 
 
-export default function Loading() {
+export default function Loading(props) {
     return (
         <div>
-            <LoadingBox></LoadingBox>
+            <LoadingBox width={props.width} height={props.height} position={props.position}></LoadingBox>
         </div>
     )
 }

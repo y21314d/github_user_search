@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { layout } from 'styled-system'
 import styled from 'styled-components'
 import Loading from '../components/Loading'
@@ -33,6 +33,11 @@ const Img = styled.img`
     ${layout}
 `
 
+const ImgBox = styled.div`
+    border-radius: 5px;
+    ${layout}
+`
+
 const Name = styled.span`
     font-size: 16px;
     ${Li}:hover &{
@@ -43,6 +48,12 @@ const Name = styled.span`
 function Followings(props) {
     const { followings } = props
 
+    const [fetching , setFetching] = useState(true)
+
+    const onImageLoad = () => {
+        setFetching( false )
+    }
+
     return (
         <Box>
             <H2>Followings</H2>
@@ -51,7 +62,15 @@ function Followings(props) {
                     followings.map(following => {
                         return (
                             <Li key={following.id}>
-                                <Img src={following.avatar_url} width={["150px", "80px", "100px", "150px"]} />
+                                {/* <Img src={following.avatar_url} width={["150px", "80px", "100px", "150px"]} /> */}
+                                <ImgBox >
+                                    <img src={following.avatar_url} width={["150px", "80px", "100px", "150px"]} onLoad={() => onImageLoad()} />
+                                    {
+                                        fetching === false
+                                            ? null
+                                            : <Loading position={"relative"}></Loading>
+                                    }
+                                </ImgBox>
                                 <Name>{following.login}</Name>
                             </Li>
                         )

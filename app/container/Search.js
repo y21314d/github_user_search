@@ -29,14 +29,20 @@ const List = styled.li`
     margin-bottom: 15px;
     flex-basis: calc(100% / 3);
     cursor: pointer;
+    max-width: 300px;
+    word-break: break-all;
 `
 
-const Img = styled.img`
+const ImgBox = styled.div`
     border-radius: 5px;
+    width:150px;
+    min-width: 150px;
     ${layout}
 `
 
+
 const Name = styled.span`
+    word-break: break-all;
     ${List}:hover &{
         color: rebeccapurple;
     }
@@ -48,10 +54,9 @@ const Name = styled.span`
 class Search extends Component {
     constructor(props) {
         super(props)
-    }
-
-    componentDidUpdate (prevProps) {
-
+        this.state = {
+            fetching: true
+        }
     }
 
     onSubmit = (userName) => {
@@ -64,20 +69,34 @@ class Search extends Component {
 
     }
 
+    onImageLoad = () => {
+        this.setState(() => ({
+            fetching: false,
+        }));
+    }
+
+
     render() {
         return (
             <div>
                 <Header  onSubmit={this.onSubmit} />
                 <Box>
                     {this.props.isPending
-                        ? <Loading></Loading>
+                        ? <Loading  position={"absolute"}></Loading>
                         : <div>
                             <Ul >
                                 {
                                     this.props.users.map(user => {
                                         return (
                                             <List key={user.id} onClick={() => this.onClickUser(user)}>
-                                                <Img src={user.avatar_url} width={"150px"} />
+                                                <ImgBox >
+                                                <img src={user.avatar_url} width={["90%","150px","150px","150px"]} onLoad={() => this.onImageLoad()} />
+                                                {
+                                                    this.state.fetching === false 
+                                                    ? null
+                                                    : <Loading position={"relative"}></Loading>
+                                                }
+                                                </ImgBox>
                                                 <Name>{user.login}</Name>
                                             </List>
                                         )
