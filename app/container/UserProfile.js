@@ -36,8 +36,8 @@ class UserProfile extends Component {
     }
 
     onSubmit = (userName) => {
-        this.props.SearchUserAction.getSearchUser(userName)
-        this.props.history.push("/search")
+        this.props.SearchUserAction.getSearchUser(userName, 1)
+        this.props.history.push("/search"+`?per_page=30&page=${1}&q=${userName}`)
     }
     
 
@@ -53,7 +53,7 @@ class UserProfile extends Component {
         return (
             <div>
                 <div>
-                    <Header userName={''} onSubmit={this.onSubmit} />
+                    <Header  onSubmit={this.onSubmit} />
                     <UserInfo
                         userInfo={this.props.userInfo}
                     />

@@ -50,8 +50,13 @@ class Search extends Component {
         super(props)
     }
 
+    componentDidUpdate (prevProps) {
+
+    }
+
     onSubmit = (userName) => {
-        this.props.SearchUserAction.getSearchUser(userName)
+        this.props.SearchUserAction.getSearchUser(userName, 1)
+        this.props.history.push("/search" + `?per_page=30&page=${1}&q=${userName}`)
     }
 
     onClickUser = (user) => {
@@ -62,7 +67,7 @@ class Search extends Component {
     render() {
         return (
             <div>
-                <Header userName={''} onSubmit={this.onSubmit} />
+                <Header  onSubmit={this.onSubmit} />
                 <Box>
                     {this.props.isPending
                         ? <Loading></Loading>
@@ -80,7 +85,10 @@ class Search extends Component {
                                 }
                             </Ul>
                             <PaginBox>
-                                <Pagination></Pagination>
+                                <Pagination
+                                    total_count={this.props.total_count}
+                                    currentPage={this.props.currentPage}
+                                />
                             </PaginBox>
                         </div>
                     }
@@ -95,6 +103,8 @@ const mapStateToProps = (state, props) => {
         ...props,
         isPending: state.SearchUser.isPending,
         users: state.SearchUser.result,
+        total_count: state.SearchUser.total_count,
+        currentPage:state.SearchUser.currentPage,
     };
 };
 const mapDispatchToProps = (dispatch) => {
